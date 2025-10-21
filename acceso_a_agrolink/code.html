@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgroLink - Conectando el Campo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#54cf17",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#162111",
+                        "text-light": "#121b0e",
+                        "text-dark": "#e8ede6",
+                        "subtle-light": "#ebf3e7",
+                        "subtle-dark": "#2a3f20"
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2354cf17' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex flex-col min-h-screen">
+<header class="w-full px-4 sm:px-6 lg:px-8">
+<div class="container mx-auto flex items-center justify-between py-4 border-b border-subtle-light dark:border-subtle-dark">
+<a class="flex items-center gap-2" href="#">
+<svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C12.95 4 4 12.95 4 24C4 35.05 12.95 44 24 44C35.05 44 44 35.05 44 24C44 12.95 35.05 4 24 4ZM32 34H16L24 14L32 34Z" fill="currentColor"></path>
+<path d="M16 34H32L24 24L16 34Z" fill="currentColor" opacity="0.4"></path>
+</svg>
+<h1 class="text-2xl font-bold text-text-light dark:text-text-dark">AgroLink</h1>
+</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Servicios</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contacto</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-sm font-semibold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors dark:bg-primary/20 dark:hover:bg-primary/30">
+                        Iniciar Sesión
+                    </button>
+<button class="px-4 py-2 text-sm font-semibold rounded-lg bg-primary text-background-light hover:bg-opacity-90 transition-colors">
+                        Registrarse
+                    </button>
+</div>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="w-full max-w-md space-y-8 p-8 sm:p-10 bg-white dark:bg-background-dark rounded-xl shadow-lg border border-subtle-light dark:border-subtle-dark">
+<div>
+<h2 class="text-center text-3xl font-bold text-text-light dark:text-text-dark">
+                        Bienvenido a AgroLink
+                    </h2>
+<p class="mt-2 text-center text-sm text-text-light/80 dark:text-text-dark/80">
+                        Conectando productores rurales con transportistas para envíos eficientes.
+                    </p>
+</div>
+<form action="#" class="space-y-6" method="POST">
+<div>
+<label class="sr-only" for="role">Seleccione su rol</label>
+<select class="form-select w-full px-4 py-3 rounded-lg bg-background-light dark:bg-subtle-dark/50 border border-subtle-light dark:border-subtle-dark focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-text-light/50 dark:placeholder:text-text-dark/50" id="role" name="role">
+<option disabled="" selected="">Seleccione su rol</option>
+<option value="producer">Productor</option>
+<option value="transporter">Transportista</option>
+<option value="admin">Administrador</option>
+</select>
+</div>
+<div>
+<button class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-background-light bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors" type="submit">
+                            Continuar
+                        </button>
+</div>
+</form>
+<p class="text-center text-sm">
+<span class="text-text-light/80 dark:text-text-dark/80">¿Ya tienes una cuenta?</span>
+<a class="font-medium text-primary hover:underline" href="#">
+                        Iniciar Sesión
+                    </a>
+</p>
+</div>
+</main>
+<footer class="w-full py-6 px-4 sm:px-6 lg:px-8 border-t border-subtle-light dark:border-subtle-dark">
+<div class="container mx-auto text-center text-sm text-text-light/60 dark:text-text-dark/60">
+                © 2024 AgroLink. Todos los derechos reservados.
+            </div>
+</footer>
+</div>
+
+</body></html>

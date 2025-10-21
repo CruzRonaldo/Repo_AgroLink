@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgroLink Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#54cf17",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#162111",
+                        "foreground-light": "#111827",
+                        "foreground-dark": "#f9fafb",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1f2937",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#374151",
+                        "muted-foreground-light": "#6b7280",
+                        "muted-foreground-dark": "#9ca3af",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="flex min-h-screen">
+<aside class="w-64 flex-shrink-0 bg-card-light dark:bg-card-dark p-6 flex flex-col justify-between border-r border-border-light dark:border-border-dark">
+<div>
+<div class="flex items-center gap-2 mb-10">
+<span class="material-symbols-outlined text-primary text-3xl">agriculture</span>
+<h1 class="text-xl font-bold text-foreground-light dark:text-foreground-dark">AgroLink</h1>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary font-semibold" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Panel</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Envíos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Transportistas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span>Mensajes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Perfil</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<button class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Nuevo Envío</span>
+</button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors text-muted-foreground-light dark:text-muted-foreground-dark" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Ayuda</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 p-8">
+<header class="mb-8">
+<h1 class="text-4xl font-bold">Panel de Control</h1>
+</header>
+<section class="mb-8">
+<h2 class="text-2xl font-semibold mb-4">Resumen de Actividad</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+<p class="text-muted-foreground-light dark:text-muted-foreground-dark mb-2">Envíos Activos</p>
+<p class="text-4xl font-bold">5</p>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+<p class="text-muted-foreground-light dark:text-muted-foreground-dark mb-2">Transportistas Disponibles</p>
+<p class="text-4xl font-bold">12</p>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+<p class="text-muted-foreground-light dark:text-muted-foreground-dark mb-2">Notificaciones</p>
+<p class="text-4xl font-bold">3</p>
+</div>
+</div>
+</section>
+<section class="mb-8">
+<h2 class="text-2xl font-semibold mb-4">Envíos Activos</h2>
+<div class="bg-card-light dark:bg-card-dark rounded-lg border border-border-light dark:border-border-dark overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-border-light dark:border-border-dark">
+<tr>
+<th class="p-4 font-semibold">ID</th>
+<th class="p-4 font-semibold">Producto</th>
+<th class="p-4 font-semibold">Origen</th>
+<th class="p-4 font-semibold">Destino</th>
+<th class="p-4 font-semibold">Fecha de Envío</th>
+<th class="p-4 font-semibold text-center">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border-light dark:border-border-dark">
+<td class="p-4 text-muted-foreground-light dark:text-muted-foreground-dark">#12345</td>
+<td class="p-4 font-medium">Maíz</td>
+<td class="p-4">Granja El Sol</td>
+<td class="p-4">Almacén Central</td>
+<td class="p-4">2024-07-20</td>
+<td class="p-4 text-center">
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400">En tránsito</span>
+</td>
+</tr>
+<tr class="border-b border-border-light dark:border-border-dark">
+<td class="p-4 text-muted-foreground-light dark:text-muted-foreground-dark">#67890</td>
+<td class="p-4 font-medium">Soja</td>
+<td class="p-4">Campo Verde</td>
+<td class="p-4">Puerto Norte</td>
+<td class="p-4">2024-07-22</td>
+<td class="p-4 text-center">
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-yellow-500/10 text-yellow-600 dark:bg-yellow-500/20 dark:text-yellow-400">Pendiente</span>
+</td>
+</tr>
+<tr>
+<td class="p-4 text-muted-foreground-light dark:text-muted-foreground-dark">#11223</td>
+<td class="p-4 font-medium">Trigo</td>
+<td class="p-4">Hacienda La Luna</td>
+<td class="p-4">Molino del Sur</td>
+<td class="p-4">2024-07-25</td>
+<td class="p-4 text-center">
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-green-500/10 text-green-600 dark:bg-green-500/20 dark:text-green-400">Confirmado</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<h2 class="text-2xl font-semibold mb-4">Notificaciones</h2>
+<div class="space-y-4">
+<div class="flex items-start gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-border-light dark:border-border-dark">
+<div class="w-10 h-10 flex-shrink-0 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+</div>
+<div>
+<p class="font-semibold">Envío #12345</p>
+<p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark">Nuevo envío de maíz disponible para transportar.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-border-light dark:border-border-dark">
+<div class="w-10 h-10 flex-shrink-0 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">assignment_ind</span>
+</div>
+<div>
+<p class="font-semibold">Envío #67890</p>
+<p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark">Transportista asignado al envío de soja.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-card-light dark:bg-card-dark rounded-lg border border-border-light dark:border-border-dark">
+<div class="w-10 h-10 flex-shrink-0 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<div>
+<p class="font-semibold">Envío #11223</p>
+<p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark">El envío de trigo ha sido confirmado por el transportista.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+</body></html>
