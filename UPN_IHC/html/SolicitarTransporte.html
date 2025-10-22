@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroLink - Nueva Solicitud</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f6f8f6;
+    }
+
+    table {
+      width: 80%;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 95%;
+      padding: 6px;
+      border: 1px solid #54cf17;
+      border-radius: 5px;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      background-color: navy;
+    }
+
+    .form-box {
+      background-color: white;
+      border: 1px solid #54cf17;
+      border-radius: 10px;
+      padding: 20px;
+      width: 70%;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    .form-box h2 {
+      color: #162111;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .form-box p {
+      color: gray;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+      color: #162111;
+    }
+
+    .nav-links a {
+      color: #121b0e;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #54cf17;
+      text-decoration: underline;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+
+    <!-- Encabezado -->
+    <div>
+      <table>
+        <tr>
+          <td width="20%">
+            <button type="submit" style="background:none; border:none; cursor:pointer;">
+              <img src="../Assets/Pantalla01/Logo.png" alt="Logo" width="100">
+            </button>
+          </td>
+          <td align="center" class="nav-links">
+            <a href="#">Inicio</a> &nbsp;&nbsp;
+            <a href="#">Mis envios</a> &nbsp;&nbsp;
+            <a href="#">Contacto</a>
+          </td>
+
+          <td width="10%" align="right">
+             <button type="submit" style="background:none; border:none; cursor:pointer;">
+              <img src="../Assets/Pantalla02/Perfil.png" alt="Perfil" width="50">
+            </button></td>
+        </tr>
+      </table>
+    </div>
+
+
+    <!-- Contenido principal -->
+    <div width="100%">
+      <table width="80%">
+        <tr>
+          <td align="center">
+            <div class="form-box">
+              <h2>Nueva Solicitud de Transporte</h2>
+              <p>Complete los detalles para conectar con un transportista.</p>
+
+              <form action="#" method="POST">
+                <label for="tipo">Tipo de Carga:</label><br>
+                <select id="tipo" name="tipo">
+                  <option selected disabled>Seleccionar tipo de carga</option>
+                  <option>Granos</option>
+                  <option>Frutas y Verduras</option>
+                  <option>Ganado</option>
+                  <option>Maquinaria Agrícola</option>
+                </select>
+
+                <br><br>
+                <label for="origen">Origen:</label><br>
+                <input type="text" id="origen" name="origen" placeholder="Ej: *Inserte dirección de origen* ">
+
+                <br><br>
+                <label for="destino">Destino:</label><br>
+                <input type="text" id="destino" name="destino" placeholder="Ej: Mercado Central">
+
+                <br><br>
+                <label for="fecha">Fecha de Envío:</label><br>
+                <input type="date" id="fecha" name="fecha">
+
+                <br><br>
+                <label for="notas">Notas Adicionales:</label><br>
+                <textarea id="notas" name="notas" rows="4"
+                  placeholder="Ej: Carga frágil, requiere camión refrigerado."></textarea>
+
+                <br><br>
+                <!-- Imagen de botón -->
+                <div style="text-align:center;">
+                  <button type="submit" style="background:none; border:none; cursor:pointer;">
+                    <img src="../Assets/Pantalla02/PublicarSolicitud.png" alt="Publicar Solicitud" width="400">
+                  </button>
+                </div>
+              </form>
+
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </center>
+</body>
+
+</html>

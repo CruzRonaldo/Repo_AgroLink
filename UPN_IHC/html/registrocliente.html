@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgroLink - Registrarse</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#54cf17",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#162111",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2354cf17' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="min-h-screen flex flex-col">
+<header class="bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm sticky top-0 z-10 border-b border-primary/20 dark:border-primary/30">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-3">
+<svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">AgroLink</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Mis envíos</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Ayuda</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxLruSVXHQmmoyeKDVQrdMVt3_7u3M5qrvSzRe1yGYEHbMoqq4PxxqW4k8AleZ_N4L1YgCQY8I1dWOHMI86aKCs4FrxLNimWpQTTHfsl_8Yx6hTUfA2xzGk8heMm_vb1VETeIAagMxIfX-LVz4ec7jli7Sxc82i03YvtR-zc1tWsVQAq6s8XkHXuR-AKwFQ4385WZqtDdQuNnuwc2XSt0E5_FVp6_eTW1RiNJaiGeY86LvOl0SWDUPe-E_pVSGs3g7zL99oKIeng");'></div>
+<button class="md:hidden p-2 rounded-md hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<div class="max-w-xl mx-auto bg-background-light dark:bg-background-dark/50 p-6 sm:p-8 rounded-xl shadow-sm border border-primary/20">
+<div class="text-center mb-8">
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white">Registrarse</h2>
+<p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Registrese su cuenta ahora.</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="nombre-completo">Nombre Completo</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="nombre-completo" name="nombre-completo" placeholder="Escribir su nombre completo" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="apellido-completo">Apellido Completo</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="apellido-completo" name="apellido-completo" placeholder="Escrbir su apellido completo" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="numtef">Telefono</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="numtef" name="numtef" placeholder="Escrbir su número telefónico" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="correo">Correo</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="correo" name="correo" placeholder="E-mail" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="direccion">Dirección</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="direccion" name="direccion" placeholder="Escribir su dirección" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="pais">Pais</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="pais" name="pais" placeholder="Elige tu pais" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="fecha-nacimiento">Fecha de Nacimiento</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="fecha-nacimiento" name="fecha-nacimiento" type="date"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="contrasena">Contraseña</label>
+<input class="w-full bg-background-light dark:bg-background-dark border border-primary/30 dark:border-primary/50 focus:ring-primary focus:border-primary rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500" id="contrasena" name="contrasena" type="text"/>
+</div>
+<div>
+<button class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-background-dark bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary transition-all" type="submit">
+                            Registrar
+                        </button>
+</div>
+</form>
+</div>
+</main>
+</div>
+
+</body></html>

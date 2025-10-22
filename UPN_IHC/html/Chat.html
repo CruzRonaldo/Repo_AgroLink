@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroLink Chat</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .message-bubble {
+      transition: all 0.2s ease;
+      max-width: 80%;
+    }
+    .message-bubble:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .dark .message-bubble:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .status-badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-en-camino { background-color: #e3f2fd; color: #1976d2; }
+    .status-retrasado { background-color: #fff3e0; color: #fb8c00; }
+    .status-llego { background-color: #e8f5e9; color: #388e3c; }
+    .status-cancelado { background-color: #ffcdd2; color: #d32f2f; }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark">
+  <div class="flex h-screen flex-col">
+    <header class="flex items-center justify-between border-b border-border-light dark:border-border-dark px-6 py-3 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 text-primary">
+          <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+          </svg>
+        </div>
+        <h1 class="text-xl font-bold">AgroLink</h1>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="p-2 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+          <span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark">notifications</span>
+        </button>
+        <div class="w-10 h-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFgZC7GhvWpeF2M1v9tVM6V6tKD7Px2ALwxdHGz47BD-IR7DtsibR6r1GhhP5bA9Lbh-dcdXsWXAGm9Pgh98Eg6-EU6vRtvjELNhFFAKk8G-fTYIN1loelfwwHVTIdD5O-JPxVM9a9rqRwBGL8ryLfEJnOxNpCp8zSbBaGh7CErgt2qPAalkycfZtEA1ekmO4kZv6bRiBG9amQv6qHC4aCafPa5DZpFrMAAIwWHLS6gGxXB0fxoYGlF2VKTDI_I3iIldDQD03W_A");'></div>
+      </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+      <main class="flex-1 flex flex-col">
+        <div class="border-b border-border-light dark:border-border-dark p-4">
+          <h2 class="text-2xl font-bold">Chat: Maíz a Rosario</h2>
+          <div class="flex items-center gap-4 mt-2 text-sm">
+            <p><span class="font-semibold">Transportista:</span> Juan Pérez</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+              <span class="status-badge status-en-camino">En camino</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
+
+        <div class="p-4 border-t border-border-light dark:border-border-dark mt-auto">
+          <div class="relative">
+            <input
+              id="message-input"
+              class="w-full bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg py-3 pl-4 pr-28 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+              placeholder="Escribe un mensaje..."
+              type="text"
+              maxlength="200"
+            />
+            <button
+              id="send-button"
+              class="absolute right-3 top-1/2 -translate-y-1/2 bg-primary text-white dark:text-background-dark font-semibold px-5 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Enviar
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <aside class="w-96 border-l border-border-light dark:border-border-dark flex-col hidden lg:flex">
+        <div class="p-6 border-b border-border-light dark:border-border-dark">
+          <h3 class="text-lg font-bold">Detalles del Envío</h3>
+        </div>
+        <div class="p-6 space-y-4 flex-1 overflow-y-auto">
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Producto</span>
+            <span class="col-span-2 font-medium">Maíz</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Cantidad</span>
+            <span class="col-span-2 font-medium">10 toneladas</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Origen</span>
+            <span class="col-span-2 font-medium">Finca La Esperanza, Córdoba</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Destino</span>
+            <span class="col-span-2 font-medium">Almacén Central, Rosario</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Estado</span>
+            <span class="col-span-2 font-medium status-badge status-en-camino">En camino</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Tiempo estimado</span>
+            <span class="col-span-2 font-medium">2 horas</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Patente</span>
+            <span class="col-span-2 font-medium">ABC 123</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Remito</span>
+            <span class="col-span-2 font-medium">#RM-78945</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Seguro</span>
+            <span class="col-span-2 font-medium">Activo</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Temperatura</span>
+            <span class="col-span-2 font-medium">22°C</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Humedad</span>
+            <span class="col-span-2 font-medium">45%</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Responsable</span>
+            <span class="col-span-2 font-medium">Carlos Gómez</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Contacto</span>
+            <span class="col-span-2 font-medium">+54 9 351 987 6543</span>
+          </div>
+          <div class="grid grid-cols-3 gap-4 text-sm">
+            <span class="text-text-secondary-light dark:text-text-secondary-dark col-span-1">Notas</span>
+            <span class="col-span-2 font-medium">Entrega en muelle 3</span>
+          </div>
+        </div>
+        <div class="p-6 border-t border-border-light dark:border-border-dark">
+          <h3 class="text-lg font-bold mb-4">Contacto del Transportista</h3>
+          <div class="flex items-center gap-4">
+            <img
+              alt="Juan Pérez avatar"
+              class="w-14 h-14 rounded-full"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6rOMmm5MhtlzbNsGtCS1yv2ic144q0DuUxW9qXmWo2RadV4ABrq50iiPyF0yolPxDSCe0hM8UC7DUAnTDPsrMjqG3xhh6hRNgO8Bcse4WZDvt11zX4M_p0Y1roMqJ7U-QHQaU8Npy7Og_B-wUo7-JQ3ThX4E8oy2Jz6p2n5l_9UnHCxqpOsy8mZ4buZri5nyHNF33B-e5gv47mqQvm9DvthW8SJvEMUMHkMEoKy8WBrhqIJpGxkpl7DlFmC5rYhssWP7__swwFw"
+            />
+            <div>
+              <p class="font-semibold">Juan Pérez</p>
+              <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">+54 9 351 123 4567</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const shipment = {
+      product: "Maíz",
+      quantity: "10 toneladas",
+      origin: "Finca La Esperanza, Córdoba",
+      destination: "Almacén Central, Rosario",
+      driver: "Juan Pérez",
+      status: "En camino",
+      estimatedTime: "2 horas",
+      currentLocation: "Córdoba",
+      destinationLocation: "Rosario",
+      plate: "ABC 123",
+      remito: "#RM-78945",
+      insurance: "Activo",
+      temperature: "22°C",
+      humidity: "45%",
+      responsible: "Carlos Gómez",
+      contact: "+54 9 351 987 6543",
+      notes: "Entrega en muelle 3"
+    };
+
+    const responsesDB = {
+      greeting: [
+        "¡Hola! Soy tu asistente de AgroLink. ¿Necesitas ayuda con este envío?",
+        "Hola, Carlos. Estoy aquí para ayudarte con el envío de maíz a Rosario.",
+        "¿En qué puedo ayudarte hoy? Juan está en camino.",
+        "¡Bienvenido al chat de AgroLink! ¿Cómo puedo asistirte?",
+        "Hola, ¿todo bien con el envío?",
+        "¿Listo para coordinar la entrega?",
+        "¡Saludos! ¿Qué necesitas saber sobre el transporte?",
+        "¿Cómo va todo? ¿Necesitas algo del camión?",
+        "¡Hola! ¿Revisamos el estado del envío?",
+        "¿Te gustaría actualizar algo del envío?"
+      ],
+      thanks: [
+        "¡De nada! Estoy aquí para ayudarte.",
+        "Gracias por escribir. Juan ha sido notificado.",
+        "¡Perfecto! Te mantendré al tanto del estado del envío.",
+        "Gracias por tu mensaje. ¡Estamos para servirte!",
+        "¡Con gusto! ¿Algo más en lo que pueda ayudarte?",
+        "Me alegra poder ayudarte. ¿Necesitas otra cosa?",
+        "No hay de qué. ¿Quieres revisar los documentos?",
+        "¡Siempre a la orden! ¿Necesitas más información?",
+        "¡Gracias a ti! ¿Deseas que te avise al llegar?",
+        "¡Claro! ¿Quieres que coordine con el almacén?"
+      ],
+      arrival: [
+        "Estoy a unos minutos. ¿Hay instrucciones especiales para la descarga?",
+        "Juan está a 5 km de destino. ¿Puedes confirmar el punto de entrega?",
+        "¡Casi llegamos! Por favor, confirma si hay algún acceso restringido.",
+        "El transporte está cerca. ¿Hay alguien esperando en el almacén?",
+        "Estamos a 10 minutos. ¿El muelle 3 está listo?",
+        "¿Puedes verificar que el área de descarga esté despejada?",
+        "Juan está en las afueras de Rosario. ¿Confirmas entrega en muelle 3?",
+        "¿Necesitas que envíe una foto del lugar de descarga?",
+        "¿Hay horario específico para la descarga?",
+        "¿Debo avisar al supervisor del almacén?"
+      ],
+      product: [
+        "El envío actual es de 10 toneladas de maíz desde Córdoba hasta Rosario.",
+        "Producto: Maíz | Cantidad: 10 toneladas | Origen: Finca La Esperanza",
+        "¿Te gustaría ver los detalles del producto o el historial de envíos?",
+        "Este envío contiene maíz de primera calidad. ¿Necesitas información adicional?",
+        "El maíz está certificado como libre de transgénicos.",
+        "¿Quieres que te envíe el certificado fitosanitario?",
+        "La humedad del maíz está en 12%, ideal para almacenamiento.",
+        "¿Necesitas el análisis de calidad del lote?",
+        "¿Deseas recibir el remito digital?",
+        "¿Te gustaría programar el próximo envío?"
+      ],
+      delay: [
+        "Hay un ligero retraso debido al tráfico. Estimado: 3 horas.",
+        "El envío tiene un retraso de 45 minutos. Juan te actualizará en breve.",
+        "Actualización: El envío se retrasará aproximadamente 1 hora más.",
+        "Lo sentimos, hay un contratiempo en la ruta. Estamos trabajando para minimizar el impacto.",
+        "Se presentó un control policial en ruta. Retraso estimado: 30 min.",
+        "Hay obras en la Ruta 9. Estamos desviados, pero seguimos en tiempo.",
+        "El camión tuvo una parada técnica. Ya está en movimiento.",
+        "¿Quieres que active la alerta de retraso para el almacén?",
+        "¿Deseas reprogramar la entrega?",
+        "¿Necesitas que contacte a otro transportista?"
+      ],
+      arrived: [
+        "¡El envío ha llegado! Juan está esperando en el punto de entrega.",
+        "¡Listo! Juan ha completado la entrega en Rosario.",
+        "Envío finalizado. Gracias por usar AgroLink.",
+        "La carga ha sido entregada exitosamente. ¿Necesitas algo más?",
+        "Juan ya está en el muelle 3. ¿Confirmas recepción?",
+        "¿Puedes firmar el remito digital?",
+        "¿Deseas calificar este servicio?",
+        "¿Necesitas el comprobante de entrega?",
+        "¿Quieres programar la próxima carga?",
+        "¿Todo en orden con la descarga?"
+      ],
+      default: [
+        "Gracias por tu mensaje. Juan ha sido notificado.",
+        "Tu mensaje ha sido enviado. Juan te responderá pronto.",
+        "¡Recibido! Juan está en camino y ha visto tu mensaje.",
+        "Hemos registrado tu consulta. El transportista será informado inmediatamente.",
+        "Tu mensaje fue entregado al conductor.",
+        "¿Quieres que le pase tu mensaje directamente a Juan?",
+        "¿Deseas que te llame Juan en los próximos minutos?",
+        "¿Necesitas que active el modo urgente?",
+        "¿Quieres que te envíe una actualización cada 15 minutos?",
+        "¿Prefieres que te contacte por WhatsApp?"
+      ],
+      help: [
+        "¿Necesitas ayuda con el seguimiento, documentación o coordinación de entrega?",
+        "Puedo ayudarte con cualquier duda sobre el envío, el transporte o los productos.",
+        "¿Quieres que te ayude a contactar con Juan o a verificar el estado del envío?",
+        "Estoy aquí para lo que necesites. Solo dime en qué puedo ayudarte.",
+        "¿Quieres ver el historial de ubicaciones del camión?",
+        "¿Necesitas el remito, factura o certificado?",
+        "¿Deseas cambiar el punto de entrega?",
+        "¿Quieres activar notificaciones en tiempo real?",
+        "¿Necesitas asistencia con el pago?",
+        "¿Quieres que te genere un reporte del envío?"
+      ],
+      location: [
+        "El transporte se encuentra actualmente en Córdoba, rumbo a Rosario.",
+        "Juan está en la Ruta Nacional 9, a 15 km de Rosario.",
+        "¿Quieres que te comparta la ubicación en tiempo real del camión?",
+        "La última ubicación registrada es en la intersección de Av. Mitre y Ruta 9.",
+        "¿Deseas ver el mapa con la ruta trazada?",
+        "¿Quieres que active el GPS en tiempo real?",
+        "¿Necesitas las coordenadas exactas?",
+        "¿Quieres que te avise al cruzar cada ciudad?",
+        "¿Deseas compartir la ubicación con un tercero?",
+        "¿Quieres que te envíe un enlace de seguimiento?"
+      ],
+      documentation: [
+        "¿Necesitas la guía de remisión, factura o certificado de origen?",
+        "Puedo enviarte todos los documentos relacionados con este envío por correo.",
+        "Los documentos están listos. ¿Prefieres recibirlos por email o WhatsApp?",
+        "Tienes acceso a todos los documentos desde tu panel de usuario.",
+        "¿Quieres que te envíe el remito en PDF?",
+        "¿Necesitas la factura A o B?",
+        "¿Deseas el certificado de calidad del maíz?",
+        "¿Quieres que te genere un comprobante de seguro?",
+        "¿Necesitas el manifiesto de carga?",
+        "¿Quieres que archive los documentos en la nube?"
+      ],
+      payment: [
+        "¿Necesitas información sobre el pago o facturación del servicio?",
+        "El pago se procesará automáticamente una vez confirmada la entrega.",
+        "¿Quieres que te envíe el comprobante de pago o el detalle de costos?",
+        "Tenemos varias opciones de pago. ¿Te gustaría que te las explique?",
+        "¿Deseas pagar con tarjeta, transferencia o efectivo?",
+        "¿Quieres que te envíe el presupuesto detallado?",
+        "¿Necesitas financiar el pago en cuotas?",
+        "¿Quieres que te avise antes de cobrar?",
+        "¿Deseas un descuento por fidelidad?",
+        "¿Quieres que te genere un reporte de gastos mensuales?"
+      ],
+      emergency: [
+        "Si tienes una emergencia, por favor avísame inmediatamente.",
+        "En caso de urgencia, puedes llamar directamente a Juan al +54 9 351 123 4567.",
+        "Para situaciones de emergencia, nuestro equipo está disponible las 24 horas.",
+        "No dudes en comunicarte si algo sale de lo normal. Estamos aquí para ayudarte.",
+        "¿Hubo un accidente? ¿Necesitas asistencia vial?",
+        "¿El camión tuvo una falla mecánica?",
+        "¿Hay un problema con la carga?",
+        "¿Necesitas activar el protocolo de emergencia?",
+        "¿Quieres que envíe un camión de respaldo?",
+        "¿Deseas cancelar o reprogramar el envío de inmediato?"
+      ],
+      weather: [
+        "El clima en Rosario está despejado. Ideal para la descarga.",
+        "Hay lluvia leve en la zona. ¿Quieres que cubra la carga?",
+        "¿Necesitas que revise las condiciones climáticas en destino?",
+        "La temperatura es de 22°C, humedad 45%. Perfecto para el maíz.",
+        "¿Quieres que active el control ambiental del camión?",
+        "¿Deseas que te envíe alertas meteorológicas?",
+        "¿Necesitas que ajuste la ventilación de la carga?",
+        "¿Quieres que revise el historial climático del trayecto?",
+        "¿Deseas que active el seguro contra eventos climáticos?",
+        "¿Quieres que te avise si cambian las condiciones?"
+      ],
+      vehicle: [
+        "El camión es un Mercedes-Benz Atego 2023, con caja cerrada.",
+        "¿Quieres ver las fotos del vehículo?",
+        "¿Necesitas la ficha técnica del camión?",
+        "El camión tiene GPS, control de temperatura y humedad.",
+        "¿Deseas verificar el estado mecánico del vehículo?",
+        "¿Quieres que te envíe el certificado de inspección?",
+        "¿Necesitas saber el consumo de combustible?",
+        "¿Quieres que active el modo eco del camión?",
+        "¿Deseas revisar el historial de mantenimiento?",
+        "¿Quieres que te envíe la patente y modelo?"
+      ],
+      insurance: [
+        "El envío tiene seguro activo contra daños, robo y accidentes.",
+        "¿Quieres ver los términos del seguro?",
+        "¿Necesitas aumentar la cobertura?",
+        "¿Deseas que te envíe el certificado de póliza?",
+        "¿Quieres activar el seguro contra demoras?",
+        "¿Necesitas asistencia con una reclamación?",
+        "¿Deseas que te explique las exclusiones?",
+        "¿Quieres que te envíe el número de póliza?",
+        "¿Necesitas que verifique la vigencia?",
+        "¿Quieres que te contacte con el asegurador?"
+      ],
+      history: [
+        "¿Quieres ver el historial de envíos de este mes?",
+        "¿Necesitas el reporte de entregas anteriores?",
+        "¿Deseas comparar tiempos de entrega?",
+        "¿Quieres que te muestre el rendimiento del transportista?",
+        "¿Necesitas el historial de incidencias?",
+        "¿Quieres que te genere un análisis de costos?",
+        "¿Deseas ver las rutas más utilizadas?",
+        "¿Quieres que te muestre el historial de productos?",
+        "¿Necesitas el resumen anual?",
+        "¿Quieres que te envíe estadísticas de puntualidad?"
+      ],
+      settings: [
+        "¿Quieres personalizar tus notificaciones?",
+        "¿Deseas cambiar tu método de contacto preferido?",
+        "¿Necesitas ajustar tus preferencias de envío?",
+        "¿Quieres activar el modo nocturno permanentemente?",
+        "¿Deseas guardar esta configuración como predeterminada?",
+        "¿Quieres que te recuerde los envíos programados?",
+        "¿Necesitas configurar alertas personalizadas?",
+        "¿Quieres que te envíe resúmenes diarios?",
+        "¿Deseas integrar con tu sistema ERP?",
+        "¿Quieres que te configure accesos rápidos?"
+      ]
+    };
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+
+    const chatMessages = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+
+    function addMessage(text, isUser = true, sender = isUser ? "Carlos Gómez" : "AgroLink IA", avatar = null) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `flex items-start gap-3 max-w-lg ${isUser ? 'ml-auto justify-end flex-row-reverse' : ''}`;
+
+      const avatarEl = document.createElement('div');
+      if (avatar) {
+        avatarEl.innerHTML = `<img alt="${sender} avatar" class="w-10 h-10 rounded-full" src="${avatar}" />`;
+      } else {
+        avatarEl.className = "w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold";
+        avatarEl.textContent = "🤖";
+      }
+
+      const contentDiv = document.createElement('div');
+      if (!isUser) {
+        const senderName = document.createElement('p');
+        senderName.className = "text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1";
+        senderName.textContent = sender;
+        contentDiv.appendChild(senderName);
+      }
+
+      const bubble = document.createElement('div');
+      bubble.className = `p-3 rounded-lg message-bubble ${
+        isUser
+          ? 'bg-primary text-white dark:text-background-dark rounded-tr-none'
+          : 'bg-surface-light dark:bg-surface-dark rounded-tl-none'
+      }`;
+      bubble.textContent = text;
+
+      contentDiv.appendChild(bubble);
+      messageDiv.appendChild(avatarEl);
+      if (!isUser) {
+        messageDiv.appendChild(contentDiv);
+      } else {
+        messageDiv.insertBefore(contentDiv, avatarEl);
+      }
+
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getAIResponse(userMessage) {
+      const msg = userMessage.toLowerCase().trim();
+
+      if (msg.includes('hola') || msg.includes('buenos') || msg.includes('hi') || msg.includes('saludos')) {
+        return getRandomResponse(responsesDB.greeting);
+      } else if (msg.includes('gracias') || msg.includes('thank') || msg.includes('genial') || msg.includes('bueno')) {
+        return getRandomResponse(responsesDB.thanks);
+      } else if (msg.includes('llegaste') || msg.includes('llegar') || msg.includes('cuándo') || msg.includes('donde') || msg.includes('llego')) {
+        return getRandomResponse(responsesDB.arrival);
+      } else if (msg.includes('maíz') || msg.includes('producto') || msg.includes('cantidad') || msg.includes('toneladas') || msg.includes('calidad')) {
+        return getRandomResponse(responsesDB.product);
+      } else if (msg.includes('retraso') || msg.includes('atraso') || msg.includes('demora') || msg.includes('tarde') || msg.includes('retrasar')) {
+        return getRandomResponse(responsesDB.delay);
+      } else if (msg.includes('llegó') || msg.includes('llegue') || msg.includes('finalizado') || msg.includes('entregado') || msg.includes('completado')) {
+        return getRandomResponse(responsesDB.arrived);
+      } else if (msg.includes('ayuda') || msg.includes('necesito') || msg.includes('puedes') || msg.includes('asistencia') || msg.includes('soporte')) {
+        return getRandomResponse(responsesDB.help);
+      } else if (msg.includes('ubicación') || msg.includes('donde') || msg.includes('localización') || msg.includes('gps') || msg.includes('posición')) {
+        return getRandomResponse(responsesDB.location);
+      } else if (msg.includes('documento') || msg.includes('factura') || msg.includes('guía') || msg.includes('remito') || msg.includes('certificado')) {
+        return getRandomResponse(responsesDB.documentation);
+      } else if (msg.includes('pago') || msg.includes('facturación') || msg.includes('cobro') || msg.includes('costo') || msg.includes('presupuesto')) {
+        return getRandomResponse(responsesDB.payment);
+      } else if (msg.includes('emergencia') || msg.includes('urgente') || msg.includes('problema') || msg.includes('accidente') || msg.includes('falla')) {
+        return getRandomResponse(responsesDB.emergency);
+      } else if (msg.includes('clima') || msg.includes('tiempo') || msg.includes('lluvia') || msg.includes('temperatura') || msg.includes('humedad')) {
+        return getRandomResponse(responsesDB.weather);
+      } else if (msg.includes('camión') || msg.includes('vehículo') || msg.includes('patente') || msg.includes('modelo') || msg.includes('mercedes')) {
+        return getRandomResponse(responsesDB.vehicle);
+      } else if (msg.includes('seguro') || msg.includes('póliza') || msg.includes('cobertura') || msg.includes('asegurado') || msg.includes('riesgo')) {
+        return getRandomResponse(responsesDB.insurance);
+      } else if (msg.includes('historial') || msg.includes('anterior') || msg.includes('pasado') || msg.includes('reporte') || msg.includes('estadísticas')) {
+        return getRandomResponse(responsesDB.history);
+      } else if (msg.includes('configuración') || msg.includes('ajustes') || msg.includes('preferencias') || msg.includes('notificaciones') || msg.includes('modo')) {
+        return getRandomResponse(responsesDB.settings);
+      } else {
+        return getRandomResponse(responsesDB.default);
+      }
+    }
+
+    function getRandomResponse(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
+
+      addMessage(text, true, "Carlos Gómez", "https://lh3.googleusercontent.com/aida-public/AB6AXuAm8DIfc2-aVnp6ferONRrqZFFnJVdspxaaxdoB115ltIKjLKZAGGhImEGoLp1SjhZR40O6RvJfY4SmMv6cYM4SnM6Wrc5jiDR9_rm3RFA_XlqkXrWpn8zP6YjHIBSJTKxvYbIel3hZNlxKB05X_Xxov9qoZQ1nVzOg55ZFsRlduzUBLa8Uf3khUSOGZbIDe0kPt9EoE9e2xDPXXAuuQJOBKbN0gZx7HQx-GU50lXpLZWC3X8Tzlami-J5yBA06Rlfl8SOnJpwzpw");
+
+      messageInput.value = '';
+
+      setTimeout(() => {
+        const aiResponse = getAIResponse(text);
+        addMessage(aiResponse, false);
+      }, 800);
+    }
+
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    addMessage(getRandomResponse(responsesDB.greeting), false);
+  </script>
+</body>
+</html>
