@@ -1,132 +1,212 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="es">
+<head>
 <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
-<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Work+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Work+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#54cf17",
-              "background-light": "#f6f8f6",
-              "background-dark": "#162111",
-            },
-            fontFamily: {
-              display: ["Work Sans"],
-            },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "0.75rem",
-              full: "9999px",
-            },
-          },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary: "#54cf17",
+          "background-light": "#f6f8f6",
+          "background-dark": "#162111",
         },
-      };
-    </script>
-<title>Stitch Design</title>
-<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+        fontFamily: {
+          display: ["Work Sans"],
+        },
+        borderRadius: {
+          DEFAULT: "0.25rem",
+          lg: "0.5rem",
+          xl: "0.75rem",
+          full: "9999px",
+        },
+      },
+    },
+  };
+</script>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-sA+e2k+g0pHk0xJ0J1qc9qFh3gqYvS2bMZV+3x0Q5vY=" crossorigin=""/>
+
+<title>Stitch Design — Mapa Perú</title>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
 <div class="flex h-screen flex-col">
-<header class="flex items-center justify-between border-b border-primary/20 dark:border-primary/30 px-6 py-3">
-<div class="flex items-center gap-3">
-<div class="flex items-center justify-center rounded-full bg-primary p-2">
-<span class="material-symbols-outlined text-white">local_shipping</span>
-</div>
-<h1 class="text-xl font-bold text-gray-900 dark:text-white">AgroLink</h1>
-</div>
-<nav class="hidden items-center gap-6 md:flex">
-<a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Dashboard</a>
-<a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">My Shipments</a>
-<a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Find Transporters</a>
-<a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Support</a>
-</nav>
-<div class="flex items-center gap-4">
-<button class="rounded-full p-2 hover:bg-primary/20 dark:hover:bg-primary/30">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIKuFGZnbaANxFNAiZEiRTEDIq_92h8MiONlUv2KB2ZqrsJeLq2AQlvM1u6tlLUnusNemATZAT6HZMKKjl005mBwvGlXLnezSUGdvOGNDLIJ8OM8bKdSdeAZ-BrOlhgRMEn6Tmp4zqpNgeSnKhWEg3pyiaXZ5Uy3IcwOHF4QI-DSCbhzFlJQEDXV2BuvTlqyMOls143NwttHDMPdeQonqqgutbra3gYA54WSGbcP7sqkR00KC3bnZu5Q_oyvxSTR8grtj297jNLg");'></div>
-</div>
-</header>
-<main class="flex flex-1 flex-col lg:flex-row">
-<div class="flex-1 lg:order-2">
-<div class="relative h-full min-h-[400px]">
-<div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_vQtWQyg24UVr6xSWK5MARFdYbZ80TuHbaHeKlx9RBWRgtJXQT6XwhjgIu0Oq3WEs5hzRsSBKaIQgEEWLTxLtJHnxmGLx3GA5aZrpnTsdb69hgrr2kGNfRL_rKXXcEjxec3XKFNlzQ46Vycsq0Rw59Od7pKf8m-MafXOV6qMta8GJ5RVezPQJAEjK_kYPkVFgYXFeUC5efUNfO-wERPkmffw4cf8afqCpIctJn2A7u4QbGhoLKa9pzJY--qz73ZFgpKvd4DbQQ");'></div>
-<div class="absolute inset-0 flex flex-col justify-between p-4">
-<div class="w-full max-w-sm">
-<label class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-gray-500 dark:text-gray-400">search</span>
-<input class="form-input w-full rounded-full border-none bg-background-light/80 dark:bg-background-dark/80 py-2 pl-10 pr-4 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-primary" placeholder="Search by Shipment ID..." type="text"/>
-</label>
-</div>
-<div class="flex flex-col items-end gap-2">
-<div class="flex flex-col rounded-lg bg-background-light/80 dark:bg-background-dark/80 shadow-lg">
-<button class="p-2 hover:bg-primary/20 dark:hover:bg-primary/30 rounded-t-lg">
-<span class="material-symbols-outlined">add</span>
-</button>
-<button class="p-2 hover:bg-primary/20 dark:hover:bg-primary/30 rounded-b-lg">
-<span class="material-symbols-outlined">remove</span>
-</button>
-</div>
-<button class="rounded-lg bg-background-light/80 dark:bg-background-dark/80 p-2 shadow-lg hover:bg-primary/20 dark:hover:bg-primary/30">
-<span class="material-symbols-outlined">my_location</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<aside class="w-full lg:w-[420px] lg:order-1 bg-background-light dark:bg-background-dark p-6 overflow-y-auto">
-<div class="mb-6">
-<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Shipment Tracking</h2>
-<p class="text-sm text-gray-600 dark:text-gray-400">Real-time location of your active shipment.</p>
-</div>
-<div class="space-y-6">
-<div>
-<h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Shipment Details</h3>
-<div class="space-y-3 rounded-lg border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10 p-4">
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Shipment ID</span>
-<span class="font-semibold">SHP-2023-10-27-001</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Status</span>
-<span class="inline-flex items-center rounded-full bg-primary/20 dark:bg-primary/30 px-2.5 py-0.5 text-xs font-semibold text-primary dark:text-white"> In Transit </span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Origin</span>
-<span class="font-semibold">Farm in Cordoba</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Destination</span>
-<span class="font-semibold">Warehouse in Buenos Aires</span>
-</div>
-</div>
-</div>
-<div>
-<h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Transporter Details</h3>
-<div class="space-y-3 rounded-lg border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10 p-4">
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Transporter</span>
-<span class="font-semibold">Transportes Rodriguez</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Vehicle Type</span>
-<span class="font-semibold">Semi-Truck</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="font-medium text-gray-600 dark:text-gray-400">Contact</span>
-<span class="font-semibold text-primary hover:underline">+54 9 11 5555 1234</span>
-</div>
-</div>
-</div>
-</div>
-</aside>
-</main>
+  <header class="flex items-center justify-between border-b border-primary/20 dark:border-primary/30 px-6 py-3">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center justify-center rounded-full bg-primary p-2">
+        <span class="material-symbols-outlined text-white">local_shipping</span>
+      </div>
+      <h1 class="text-xl font-bold text-gray-900 dark:text-white">AgroLink</h1>
+    </div>
+    <nav class="hidden items-center gap-6 md:flex">
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Dashboard</a>
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Mis Envíos</a>
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Buscar Transportistas</a>
+      <a class="text-sm font-medium hover:text-primary dark:hover:text-primary" href="#">Soporte</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <button class="rounded-full p-2 hover:bg-primary/20 dark:hover:bg-primary/30">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+      <div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIKuFGZnbaANxFNAiZEiRTEDIq_92h8MiONlUv2KB2ZqrsJeLq2AQlvM1u6tlLUnusNemATZAT6HZMKKjl005mBwvGlXLnezSUGdvOGNDLIJ8OM8bKdSdeAZ-BrOlhgRMEn6Tmp4zqpNgeSnKhWEg3pyiaXZ5Uy3IcwOHF4QI-DSCbhzFlJQEDXV2BuvTlqyMOls143NwttHDMPdeQonqqgutbra3gYA54WSGbcP7sqkR00KC3bnZu5Q_oyvxSTR8grtj297jNLg");'></div>
+    </div>
+  </header>
+
+  <main class="flex flex-1 flex-col lg:flex-row">
+    <!-- Area principal: aquí colocamos el mapa -->
+    <div class="flex-1 lg:order-2">
+      <div class="relative h-full min-h-[400px]">
+        <!-- MAP CONTAINER -->
+        <div id="map" class="absolute inset-0 z-0"></div>
+
+        <!-- UI sobre el mapa (buscador y botones) -->
+        <div class="absolute inset-0 flex flex-col justify-between p-4 z-10 pointer-events-none">
+          <div class="w-full max-w-sm pointer-events-auto">
+            <label class="relative flex items-center">
+              <span class="material-symbols-outlined absolute left-3 text-gray-500 dark:text-gray-400">search</span>
+              <input id="searchInput" class="form-input w-full rounded-full border-none bg-white/80 dark:bg-background-dark/80 py-2 pl-10 pr-4 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-primary" placeholder="Buscar por ciudad o coordenadas..." type="text"/>
+            </label>
+          </div>
+
+          <div class="flex flex-col items-end gap-2 pointer-events-auto">
+            <div class="flex flex-col rounded-lg bg-background-light/80 dark:bg-background-dark/80 shadow-lg">
+              <button id="btnAdd" class="p-2 hover:bg-primary/20 dark:hover:bg-primary/30 rounded-t-lg">
+                <span class="material-symbols-outlined">add_location</span>
+              </button>
+              <button id="btnRemove" class="p-2 hover:bg-primary/20 dark:hover:bg-primary/30 rounded-b-lg">
+                <span class="material-symbols-outlined">remove</span>
+              </button>
+            </div>
+            <button id="btnLocate" class="rounded-lg bg-background-light/80 dark:bg-background-dark/80 p-2 shadow-lg hover:bg-primary/20 dark:hover:bg-primary/30 pointer-events-auto">
+              <span class="material-symbols-outlined">my_location</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="w-full lg:w-[420px] lg:order-1 bg-background-light dark:bg-background-dark p-6 overflow-y-auto">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Seguimiento de Envío</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Ubicación en tiempo real de su envío activo.</p>
+      </div>
+      <div class="space-y-6">
+        <div>
+          <h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Detalles de Envío</h3>
+          <div class="space-y-3 rounded-lg border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10 p-4">
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Envío ID</span>
+              <span class="font-semibold">SHP-2023-10-27-001</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Estado</span>
+              <span class="inline-flex items-center rounded-full bg-primary/20 dark:bg-primary/30 px-2.5 py-0.5 text-xs font-semibold text-primary dark:text-white"> In Transit </span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Origen</span>
+              <span class="font-semibold">Puno</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Destino</span>
+              <span class="font-semibold">Lima</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">Detalles de Transporte</h3>
+          <div class="space-y-3 rounded-lg border border-primary/20 dark:border-primary/30 bg-primary/5 dark:bg-primary/10 p-4">
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Transportista</span>
+              <span class="font-semibold">Transportes Rodriguez</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Tipo de Vehículo</span>
+              <span class="font-semibold">Semi-Truck</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="font-medium text-gray-600 dark:text-gray-400">Contacto</span>
+              <span class="font-semibold text-primary hover:underline">+51 987 654 320</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
 </div>
 
-</body></html>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-o9N1j7kG3k2x6GvH4v3k6z0ZxjvIzi6QG3h8k6Y0hU8=" crossorigin=""></script>
+
+<script>
+  // Inicializar mapa centrado en Perú (visual general)
+  const peruCenter = [-9.189967, -75.015152]; // centro aproximado de Perú
+  const map = L.map('map', { zoomControl: true }).setView([-12.046374, -77.042793], 5); // centrado en Lima con zoom país
+
+  // Capa de OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Marcador en Lima (puedes moverlo o agregar más)
+  const limaMarker = L.marker([-12.046374, -77.042793]).addTo(map)
+    .bindPopup('<b>Lima</b><br>Capital del Perú.').openPopup();
+
+  // Botón localizar usando Geolocation
+  document.getElementById('btnLocate').addEventListener('click', () => {
+    map.locate({ setView: true, maxZoom: 12 });
+  });
+
+  map.on('locationfound', function(e) {
+    // añade círculo y marker de la ubicación del usuario
+    L.marker(e.latlng).addTo(map).bindPopup('Tu ubicación aproximada').openPopup();
+    L.circle(e.latlng, { radius: e.accuracy }).addTo(map);
+  });
+
+  // Botones de añadir/quitar marcador (ejemplo simple)
+  let extraMarker = null;
+  document.getElementById('btnAdd').addEventListener('click', () => {
+    if (!extraMarker) {
+      extraMarker = L.marker(peruCenter).addTo(map).bindPopup('Marcador centrado en Perú');
+      map.setView(peruCenter, 5);
+    }
+  });
+  document.getElementById('btnRemove').addEventListener('click', () => {
+    if (extraMarker) {
+      map.removeLayer(extraMarker);
+      extraMarker = null;
+    }
+  });
+
+  // Buscador simple por coordenadas "lat, lng"
+  document.getElementById('searchInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const val = this.value.trim();
+      // si ingresa "lat, lng"
+      const parts = val.split(',').map(x => parseFloat(x));
+      if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        map.setView([parts[0], parts[1]], 12);
+        L.marker([parts[0], parts[1]]).addTo(map).bindPopup(`Ubicación: ${parts[0]}, ${parts[1]}`).openPopup();
+      } else {
+        alert('Introduce coordenadas en formato: lat, lng (ej: -12.0464, -77.0428)');
+      }
+    }
+  });
+</script>
+
+<style>
+  /* Asegura que el mapa ocupe la capa completa */
+  #map { width: 100%; height: 100%; }
+</style>
+</body>
+</html>
